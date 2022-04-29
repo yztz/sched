@@ -1,6 +1,7 @@
 package top.yztz.sched.views;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import top.yztz.sched.config.Config;
 
 public class TimeView extends LinearLayout {
     private TextView tvNo, tvStart, tvEnd;
+    private LinearLayout llDetail;
     private View root;
     private int no;
 
@@ -27,6 +29,11 @@ public class TimeView extends LinearLayout {
         tvNo = root.findViewById(R.id.no);
         tvStart = root.findViewById(R.id.range_start);
         tvEnd = root.findViewById(R.id.range_end);
+        llDetail = root.findViewById(R.id.detail);
+    }
+
+    public void hideDetail() {
+        llDetail.setVisibility(GONE);
     }
 
     public void setNo(int no) {
@@ -38,6 +45,10 @@ public class TimeView extends LinearLayout {
             root.setBackgroundResource(R.color.light_blue);
         else
             root.setBackgroundResource(R.color.white);
+    }
+
+    public void setNoSize(float size) {
+        tvNo.setTextSize(size);
     }
 
     public int getNo() {

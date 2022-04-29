@@ -45,7 +45,9 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.insert(TABLE_COURSE, null,
                 DBUtils.buildCourse("国际关系", "方建中",Date.TUESDAY, "七教", 6, 7, Date.ALL_WEEK));
         db.insert(TABLE_COURSE, null,
-                DBUtils.buildCourse("不知名课程", "不知名老师", Date.TUESDAY, "十二教", 1, 2, Date.week2bitmap(new int[]{1, 2, 3})));
+                DBUtils.buildCourse("不知名课程1", "不知名老师1", Date.FRIDAY, "十二教", 1, 2, Date.week2bitmap(new int[]{1, 2, 3})));
+        db.insert(TABLE_COURSE, null,
+                DBUtils.buildCourse("不知名课程2", "不知名老师2", Date.MONDAY, "三教", 3, 5, Date.ALL_WEEK));
     }
 
     @Override

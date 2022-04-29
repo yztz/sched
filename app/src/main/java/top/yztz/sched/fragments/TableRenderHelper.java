@@ -14,6 +14,7 @@ import java.util.Random;
 
 import top.yztz.sched.R;
 import top.yztz.sched.config.Config;
+import top.yztz.sched.interfaces.CourseViewConstructor;
 import top.yztz.sched.pojo.Course;
 import top.yztz.sched.pojo.Date;
 import top.yztz.sched.views.CourseView;
@@ -31,21 +32,37 @@ public class TableRenderHelper {
         return context.getColor(Config.CARD_COLORS[idx]);
     }
 
-    public static void renderTable(ViewGroup canvas, List<Course> courses, int unitHeight) {
+    public static void renderColumn(ViewGroup canvas, List<Course> courses, int unitHeight, CourseViewConstructor cc) {
+        renderTable(canvas, courses, unitHeight, -1, true, cc);
+    }
+
+    public static void renderTable(ViewGroup canvas, List<Course> courses, int unitHeight, int unitWidth, CourseViewConstructor cc) {
+        renderTable(canvas, courses, unitHeight, unitWidth, false, cc);
+    }
+
+    public static void renderTable(ViewGroup canvas, List<Course> courses, int unitHeight, int unitWidth, boolean singleCol, CourseViewConstructor cc) {
         Context context = canvas.getContext();
         Log.d(TAG, "renderTable: unitHeight = " + unitHeight);
         Transition trans = TransitionInflater.from(context).inflateTransition(R.transition.table_trans);
         TransitionManager.beginDelayedTransition(canvas, trans);
         canvas.removeAllViews();
 
+        int width = singleCol ?  ViewGroup.LayoutParams.MATCH_PARENT : unitWidth;
         for (Course course : courses) {
             CourseView cv = new CourseView(context, course);
+            // 随机颜色
             cv.setBgColor(getRandomColor(context));
             Date date = course.getDate();
+            int dayOfWeek = date.getDay();
+            int timeLen = date.getTimeLen();
             FrameLayout.LayoutParams pl = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    date.getTimeLen() * unitHeight);
-            pl.setMargins(0, (date.getStartTime() - 1) * unitHeight, 0, 0);
+                    width,
+                    timeLen * unitHeight);
+
+            int left = singleCol ? 0 : (dayOfWeek - 1) * unitWidth;
+            int top = (date.getStartTime() - 1) * unitHeight;
+            pl.setMargins(left, top, 0, 0);
+            if (cc != null) cc.process(cv);
             canvas.addView(cv, pl);
         }
     }

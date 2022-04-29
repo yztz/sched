@@ -19,7 +19,6 @@ import java.util.List;
 
 import top.yztz.sched.R;
 import top.yztz.sched.config.Config;
-import top.yztz.sched.interfaces.TouchEventListener;
 import top.yztz.sched.persistence.DataHelper;
 import top.yztz.sched.pojo.Course;
 import top.yztz.sched.utils.DateUtils;
@@ -27,7 +26,7 @@ import top.yztz.sched.utils.StringUtils;
 import top.yztz.sched.views.ActionbarView;
 import top.yztz.sched.views.TimeView;
 
-public class DayFrag extends Fragment implements ActionbarView.DayListener, TouchEventListener {
+public class DayFrag extends Fragment implements ActionbarView.DayListener {
     private static final String TAG = "DayFrag";
     private LinearLayout llTime;
     private FrameLayout flContainer;
@@ -58,6 +57,7 @@ public class DayFrag extends Fragment implements ActionbarView.DayListener, Touc
 
         initTimeNames();
 
+        // 等组件绘制完毕执行ui线程时再渲染时间信息
         llTime.post(()->{
             this.unitHeight = llTime.getChildAt(0).getHeight();
             onDayChange(true);
@@ -100,14 +100,10 @@ public class DayFrag extends Fragment implements ActionbarView.DayListener, Touc
     private void toggleTable(boolean today) {
         List<Course> courses = today ? DataHelper.getCoursesToday() : DataHelper.getCoursesTomorrow();
         flContainer.post(() -> {
-            TableRenderHelper.renderTable(flContainer, courses, unitHeight);
+            TableRenderHelper.renderColumn(flContainer, courses, unitHeight, null);
         });
     }
 
-    @Override
-    public boolean onTouch(MotionEvent event) {
-        return true;
-    }
 }
 
 
