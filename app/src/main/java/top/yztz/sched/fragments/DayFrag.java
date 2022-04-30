@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -24,6 +23,7 @@ import top.yztz.sched.pojo.Course;
 import top.yztz.sched.utils.DateUtils;
 import top.yztz.sched.utils.StringUtils;
 import top.yztz.sched.views.ActionbarView;
+import top.yztz.sched.views.TableRenderHelper;
 import top.yztz.sched.views.TimeView;
 
 public class DayFrag extends Fragment implements ActionbarView.DayListener {
@@ -44,7 +44,7 @@ public class DayFrag extends Fragment implements ActionbarView.DayListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_portrait_body, null);
+        return inflater.inflate(R.layout.frag_portrait_table, null);
     }
 
     @Override

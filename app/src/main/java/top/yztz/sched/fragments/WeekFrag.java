@@ -1,5 +1,7 @@
 package top.yztz.sched.fragments;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -23,9 +25,12 @@ import top.yztz.sched.persistence.DataHelper;
 import top.yztz.sched.pojo.Course;
 import top.yztz.sched.utils.DateUtils;
 import top.yztz.sched.utils.StringUtils;
+import top.yztz.sched.utils.SystemUtils;
+import top.yztz.sched.views.CourseView;
+import top.yztz.sched.views.TableRenderHelper;
 import top.yztz.sched.views.TimeView;
 
-public class WeekFrag extends Fragment {
+public class WeekFrag extends Fragment implements View.OnClickListener {
     private Context context;
     private LinearLayout llTime, llDayOfWeek;
     private FrameLayout flContainer;
@@ -41,7 +46,7 @@ public class WeekFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_landscape_body, null);
+        return inflater.inflate(R.layout.frag_landscape_table, null);
     }
 
 
@@ -51,6 +56,8 @@ public class WeekFrag extends Fragment {
         llTime = view.findViewById(R.id.time);
         llDayOfWeek = view.findViewById(R.id.day_of_week);
         flContainer = view.findViewById(R.id.content);
+
+        flContainer.setOnClickListener(this);
 
         initTimeNames();
         initDayNames();
@@ -64,12 +71,35 @@ public class WeekFrag extends Fragment {
         });
     }
 
-    private void showWeek(int weekNo) {
+    private CourseView highlightCourse = null;
+
+    private final View.OnLongClickListener courseListener = v -> {
+        CourseView cv = (CourseView) v;
+        Course course = cv.getCourse();
+        if (cv != highlightCourse) {
+            if (showFormView(course)) { // 尝试显示表单
+                if (null != highlightCourse) {
+                    highlightCourse.stopShaking();
+                }
+                highlightCourse = cv;
+                highlightCourse.startShaking();
+                SystemUtils.vibrate(context, 100);
+            }
+        }
+        return true;
+    };
+
+    public void showWeek(int weekNo) {
+        // 取消原先如果有选中的课程
+        // 这里不需要对select_frag中的状态做检查，因为调用这个方法时一定没有显示的表单
+        highlightCourse = null;
         List<Course> courses = DataHelper.getCoursesByWeek(weekNo);
         TableRenderHelper.renderTable(flContainer, courses, unitHeight, unitWidth, cv -> {
             cv.setTextSizeRatio(0.5f);
             cv.setRadius(10);
-            cv.setPadding(2);
+            cv.setMargin(2);
+            cv.setOnLongClickListener(courseListener);
+            cv.setElevation(10);
         });
     }
 
@@ -107,6 +137,33 @@ public class WeekFrag extends Fragment {
             tv.setTextSize(13);
             tv.setGravity(Gravity.CENTER);
             llDayOfWeek.addView(tv, lp);
+        }
+    }
+
+    private boolean showWeekList() {
+        SelectFrag selectFrag = (SelectFrag) getParentFragmentManager().findFragmentByTag("week_select");
+        if (selectFrag != null) {
+            return selectFrag.showWeekList();
+        }
+        return false;
+    }
+
+    private boolean showFormView(Course course) {
+        SelectFrag selectFrag = (SelectFrag) getParentFragmentManager().findFragmentByTag("week_select");
+        if (selectFrag != null) {
+            return selectFrag.showFormView(course);
+        }
+        return false;
+    }
+
+    // 用于自身单击事件
+    @Override
+    public void onClick(View v) {
+        if (null !=  highlightCourse) {
+            if (showWeekList()) {
+                highlightCourse.stopShaking();
+                highlightCourse = null;
+            }
         }
     }
 }

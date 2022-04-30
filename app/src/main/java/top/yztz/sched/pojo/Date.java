@@ -3,6 +3,7 @@ package top.yztz.sched.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.yztz.sched.config.Config;
 import top.yztz.sched.persistence.FieldName;
 
 public class Date {
@@ -85,7 +86,7 @@ public class Date {
     public static List<Integer> parseWeek(int i) {
         List<Integer> ans = new ArrayList<>();
 
-        for (int week = 1; week <= 20; week++) {
+        for (int week = 1; week <= Config.WEEK_NUM; week++) {
             if ((i >> (week - 1)) % 2 == 1) ans.add(week);
         }
 

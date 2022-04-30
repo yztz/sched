@@ -3,6 +3,7 @@
     package="top.yztz.sched">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -13,9 +14,11 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Sched">
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".activities.LandscapeActivity"
             android:exported="false" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".activities.PortraitActivity"
             android:exported="true">
             <intent-filter>

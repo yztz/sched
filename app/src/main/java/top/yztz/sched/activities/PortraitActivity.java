@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -19,7 +20,7 @@ import top.yztz.sched.views.ActionbarView;
 public class PortraitActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
     private static final String TAG = "PortraitActivity";
     private ActionbarView actionbarView;
-    private final DayFrag dayFrag = new DayFrag();
+    private DayFrag dayFrag;
 
     private GestureDetector gestureDetector;
 
@@ -29,6 +30,12 @@ public class PortraitActivity extends AppCompatActivity implements GestureDetect
         setContentView(R.layout.activity_portrait);
         // 初始化数据
         DataHelper.DBInit(this);
+
+        // 载入fragment
+        initFragment();
+
+        // 设置竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //更换标题栏
         ActionBar actionBar = getSupportActionBar();
@@ -41,8 +48,7 @@ public class PortraitActivity extends AppCompatActivity implements GestureDetect
             parent.setContentInsetsAbsolute(0, 0);
             actionBar.show();
         }
-        // 载入fragment
-        initFragment();
+
 
         gestureDetector = new GestureDetector(this, this);
     }
@@ -54,9 +60,10 @@ public class PortraitActivity extends AppCompatActivity implements GestureDetect
     }
 
     private void initFragment() {
+        dayFrag = new DayFrag();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.body, dayFrag, "day_table");
-        transaction.commitAllowingStateLoss();
+        transaction.commit();
     }
 
 

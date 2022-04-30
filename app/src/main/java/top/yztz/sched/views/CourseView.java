@@ -1,10 +1,14 @@
 package top.yztz.sched.views;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Outline;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,13 +22,21 @@ import top.yztz.sched.pojo.Course;
 public class CourseView extends LinearLayout {
     private static final String TAG = "CourseView";
     private Context context;
-    private LinearLayout llRoot;
-    private CardView cardView;
+    private LinearLayout llRoot = this, llWrapper;
     private TextView tvName, tvTeacher, tvPlace;
+
+    private Course course;
+
+    protected int margin = 0;
+
+    private ObjectAnimator shakeAnim;
 
     public CourseView(@NonNull Context context, Course course) {
         this(context, (AttributeSet) null);
-        applyCourse(course);
+        shakeAnim = ObjectAnimator.ofFloat(this, "rotation", 0, -6, 0, 6, 0).setDuration(200);
+        shakeAnim.setRepeatCount(ValueAnimator.INFINITE);
+        shakeAnim.setRepeatMode(ValueAnimator.REVERSE);
+        setCourse(course);
     }
 
     public void setTextSizeRatio(float ratio) {
@@ -38,7 +50,7 @@ public class CourseView extends LinearLayout {
     }
 
    public void setBgColor(int color) {
-        cardView.setCardBackgroundColor(color);
+        setBackgroundColor(color);
    }
 
     private void setTextColor(int textColor) {
@@ -48,41 +60,61 @@ public class CourseView extends LinearLayout {
     }
 
     public void setRadius(float radius) {
-        cardView.setRadius(radius);
+//        cardView.setRadius(radius);
+        setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+            }
+        });
+        setClipToOutline(true);
+    }
+
+
+    public void stopShaking() {
+        shakeAnim.end();
+    }
+
+
+    public void startShaking() {
+        shakeAnim.start();
+    }
+
+
+    public void setMargin(int value) {
+        this.margin = value;
     }
 
     public void setElevation(float elevation) {
-        cardView.setCardElevation(elevation);
-    }
-
-    public void setPadding(int padding) {
-        llRoot.setPadding(padding, padding, padding, padding);
+        super.setElevation(elevation);
     }
 
 
-    private void applyCourse(Course course) {
+
+    private void setCourse(Course course) {
         if (course == null) {
             Log.d(TAG, "course is null");
             return;
         }
+        this.course = course;
         tvName.setText(course.getName());
         tvTeacher.setText(course.getTeacher());
         tvPlace.setText(course.getPlace());
+    }
 
+    public Course getCourse() {
+        return course;
     }
 
     public CourseView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        View.inflate(context, R.layout.layout_course, this);
-        llRoot = findViewById(R.id.course_container);
-        cardView = findViewById(R.id.cv_wrapper);
+        View.inflate(context, R.layout.layout_item_course, this);
+
+        llWrapper = findViewById(R.id.course_wrapper);
         tvName = findViewById(R.id.course_name);
         tvTeacher = findViewById(R.id.course_teacher);
         tvPlace = findViewById(R.id.course_place);
-
-        cardView.setRadius(0);
-        cardView.setCardElevation(0);
 
         setTextColor(0xffffffff);
         setBgColor(context.getColor(R.color.primary));

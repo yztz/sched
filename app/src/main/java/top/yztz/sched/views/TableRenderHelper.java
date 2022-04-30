@@ -1,4 +1,4 @@
-package top.yztz.sched.fragments;
+package top.yztz.sched.views;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,7 +14,6 @@ import java.util.Random;
 
 import top.yztz.sched.R;
 import top.yztz.sched.config.Config;
-import top.yztz.sched.interfaces.CourseViewConstructor;
 import top.yztz.sched.pojo.Course;
 import top.yztz.sched.pojo.Date;
 import top.yztz.sched.views.CourseView;
@@ -47,23 +46,32 @@ public class TableRenderHelper {
         TransitionManager.beginDelayedTransition(canvas, trans);
         canvas.removeAllViews();
 
-        int width = singleCol ?  ViewGroup.LayoutParams.MATCH_PARENT : unitWidth;
+
         for (Course course : courses) {
             CourseView cv = new CourseView(context, course);
             // 随机颜色
             cv.setBgColor(getRandomColor(context));
+            if (cc != null) cc.process(cv);
+
             Date date = course.getDate();
             int dayOfWeek = date.getDay();
             int timeLen = date.getTimeLen();
+            int width = singleCol ?  ViewGroup.LayoutParams.MATCH_PARENT : unitWidth - 2 * cv.margin;
+            int height = timeLen * unitHeight - 2 * cv.margin;
+
             FrameLayout.LayoutParams pl = new FrameLayout.LayoutParams(
                     width,
-                    timeLen * unitHeight);
+                    height);
 
-            int left = singleCol ? 0 : (dayOfWeek - 1) * unitWidth;
-            int top = (date.getStartTime() - 1) * unitHeight;
+            int left = singleCol ? 0 : (dayOfWeek - 1) * unitWidth + cv.margin;
+            int top = (date.getStartTime() - 1) * unitHeight + cv.margin;
             pl.setMargins(left, top, 0, 0);
-            if (cc != null) cc.process(cv);
+
             canvas.addView(cv, pl);
         }
+    }
+
+    public interface CourseViewConstructor {
+        void process(CourseView cv);
     }
 }

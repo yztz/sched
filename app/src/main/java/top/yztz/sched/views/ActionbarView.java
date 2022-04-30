@@ -41,7 +41,7 @@ public class ActionbarView extends LinearLayout implements View.OnClickListener 
         this.context = context;
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         setLayoutParams(lp);
-        actionbarView = LayoutInflater.from(context).inflate(R.layout.layout_main_action_bar, this, true);
+        actionbarView = LayoutInflater.from(context).inflate(R.layout.layout_actionbar_main, this, true);
         mImgHelp = actionbarView.findViewById(R.id.img_full);
         mToday = actionbarView.findViewById(R.id.today);
         mTomorrow = actionbarView.findViewById(R.id.tomorrow);

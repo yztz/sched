@@ -4,6 +4,7 @@ import top.yztz.sched.R;
 
 public class Config {
     public static final int MAX_TIME_LEN = 12;
+    public static final int WEEK_NUM = 20;
     public static final String[][] TIME_TABLE = new String[MAX_TIME_LEN + 1][2];
     public static final int[] CARD_COLORS = {
             R.color.blue,

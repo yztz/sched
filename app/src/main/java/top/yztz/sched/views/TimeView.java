@@ -1,10 +1,8 @@
 package top.yztz.sched.views;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +23,7 @@ public class TimeView extends LinearLayout {
 
     public TimeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        root = inflate(getContext(), R.layout.layout_time, this);
+        root = inflate(getContext(), R.layout.layout_item_time, this);
         tvNo = root.findViewById(R.id.no);
         tvStart = root.findViewById(R.id.range_start);
         tvEnd = root.findViewById(R.id.range_end);

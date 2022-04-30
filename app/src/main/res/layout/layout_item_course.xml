@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/course_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="形势与政策"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/course_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:text="华鑫鹏"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/course_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="六教108"
+        android:textSize="20sp" />
+</LinearLayout>
+
