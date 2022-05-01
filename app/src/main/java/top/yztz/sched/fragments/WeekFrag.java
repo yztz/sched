@@ -15,12 +15,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
 import top.yztz.sched.R;
 import top.yztz.sched.config.Config;
+import top.yztz.sched.interfaces.ConfirmCallback;
 import top.yztz.sched.persistence.DataHelper;
 import top.yztz.sched.pojo.Course;
 import top.yztz.sched.utils.DateUtils;
@@ -73,22 +75,6 @@ public class WeekFrag extends Fragment implements View.OnClickListener {
 
     private CourseView highlightCourse = null;
 
-    private final View.OnLongClickListener courseListener = v -> {
-        CourseView cv = (CourseView) v;
-        Course course = cv.getCourse();
-        if (cv != highlightCourse) {
-            if (showFormView(course)) { // 尝试显示表单
-                if (null != highlightCourse) {
-                    highlightCourse.stopShaking();
-                }
-                highlightCourse = cv;
-                highlightCourse.startShaking();
-                SystemUtils.vibrate(context, 100);
-            }
-        }
-        return true;
-    };
-
     public void showWeek(int weekNo) {
         // 取消原先如果有选中的课程
         // 这里不需要对select_frag中的状态做检查，因为调用这个方法时一定没有显示的表单
@@ -140,30 +126,53 @@ public class WeekFrag extends Fragment implements View.OnClickListener {
         }
     }
 
-    private boolean showWeekList() {
+    private void showWeekList(ConfirmCallback callback) {
         SelectFrag selectFrag = (SelectFrag) getParentFragmentManager().findFragmentByTag("week_select");
         if (selectFrag != null) {
-            return selectFrag.showWeekList();
+            selectFrag.showWeekList(callback);
         }
-        return false;
     }
 
-    private boolean showFormView(Course course) {
+    private void showFormView(Course course, ConfirmCallback callback) {
         SelectFrag selectFrag = (SelectFrag) getParentFragmentManager().findFragmentByTag("week_select");
         if (selectFrag != null) {
-            return selectFrag.showFormView(course);
+            selectFrag.showFormView(course, callback);
         }
-        return false;
+    }
+
+    private void switchHighlight(CourseView c) {
+        if (null != highlightCourse) {
+            highlightCourse.stopShaking();
+        }
+        highlightCourse = c;
+        if (null != c) c.startShaking();
     }
 
     // 用于自身单击事件
     @Override
     public void onClick(View v) {
-        if (null !=  highlightCourse) {
-            if (showWeekList()) {
-                highlightCourse.stopShaking();
-                highlightCourse = null;
-            }
+        if (null != highlightCourse) {
+            showWeekList(confirmed -> {
+                if (confirmed) {
+                    switchHighlight(null);
+                }
+            });
         }
     }
+    // 课程长按事件
+    private final View.OnLongClickListener courseListener = v -> {
+        CourseView cv = (CourseView) v;
+        Course course = cv.getCourse();
+        if (cv != highlightCourse) {
+            SystemUtils.vibrate(context, 100);
+            showFormView(course, confirmed -> {
+                if (confirmed) {
+                    switchHighlight(cv);
+                }
+            });
+        }
+        return true;
+    };
+
+
 }

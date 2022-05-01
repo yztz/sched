@@ -6,12 +6,14 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 
@@ -21,11 +23,12 @@ import java.util.List;
 
 import top.yztz.sched.R;
 import top.yztz.sched.pojo.Date;
+import top.yztz.sched.utils.StringUtils;
 
 
 public class TimeSettingDialog extends Dialog implements View.OnClickListener {
-    private Context context;
     private EditText mCustom;
+    private RadioGroup mBtnGroup;
     private RadioButton mBtnSingle, mBtnDouble, mBtnAll, mBtnCustom;
     private Button mBtnConfirm, mBtnCancel;
 
@@ -42,7 +45,6 @@ public class TimeSettingDialog extends Dialog implements View.OnClickListener {
     public TimeSettingDialog(@NonNull Context context, onDismissListener listener) {
         super(context);
         this.listener = listener;
-        this.context = context;
         setCancelable(false);
     }
 
@@ -100,6 +102,7 @@ public class TimeSettingDialog extends Dialog implements View.OnClickListener {
         getWindow().setAttributes(p);
 
         mCustom = findViewById(R.id.custom_content);
+        mBtnGroup = findViewById(R.id.btn_group);
         mBtnSingle = findViewById(R.id.btn_single);
         mBtnDouble = findViewById(R.id.btn_double);
         mBtnAll = findViewById(R.id.btn_all);
@@ -112,6 +115,41 @@ public class TimeSettingDialog extends Dialog implements View.OnClickListener {
 
         mBtnConfirm.setOnClickListener(this);
         mBtnCancel.setOnClickListener(this);
+
+        // 监听周次选择
+        mBtnGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.btn_single:
+                    date.setWeeks(Date.SINGLE_WEEK);
+                    break;
+                case R.id.btn_double:
+                    date.setWeeks(Date.DOUBLE_WEEK);
+                    break;
+                case R.id.btn_all:
+                    date.setWeeks(Date.ALL_WEEK);
+                    break;
+                case R.id.btn_custom:
+                    // todo:校验
+                    String content = mCustom.getText().toString();
+                    List<Integer> weeks;
+                    if (null != (weeks = StringUtils.str2weeks(content))) date.setWeeks(weeks);
+                    break;
+            }
+        });
+        // 监听dayOfWeek
+        mDayOfWeekGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            date.setDay(checkedId + 1);
+        });
+
+        // 监听节次变化
+        startPicker.setOnTimeChangeListener(newTime -> {
+            date.setStartTime(newTime);
+        });
+        endPicker.setOnTimeChangeListener(newTime -> {
+            date.setEndTime(newTime);
+        });
+
+
         // 单击编辑框时自动选中
 //        mCustom.setOnFocusChangeListener((v, hasFocus) -> {
 //            if (hasFocus) mBtnCustom.setChecked(true);

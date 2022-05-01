@@ -21,6 +21,8 @@ public class TimePicker extends LinearLayout {
 
     private LinearSnapHelper snapHelper = new LinearSnapHelper();
 
+    private OnTimeChangeListener listener;
+
     public TimePicker(Context context) {
         this(context, null);
     }
@@ -51,19 +53,32 @@ public class TimePicker extends LinearLayout {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) { // 滑动停止
                     int pos = ((RecyclerView.LayoutParams)snapHelper.findSnapView(layoutManager).getLayoutParams()).getViewAdapterPosition();
-                    adapter.setCurrentTime(pos + 1);
+                    changeTime(pos + 1);
                 }
             }
         });
 
     }
 
-    public void setTime(int time) {
+    public void setOnTimeChangeListener(OnTimeChangeListener listener) {
+        this.listener = listener;
+    }
+
+    private void changeTime(int time) {
         adapter.setCurrentTime(time);
+        if (null != listener) listener.onTimeChanged(time);
+    }
+
+    public void setTime(int time) {
+        changeTime(time);
         recyclerView.smoothScrollToPosition(time - 1);
     }
 
     public int getTime() {
         return adapter.getCurrentTime();
+    }
+
+    public interface OnTimeChangeListener {
+        void onTimeChanged(int newTime);
     }
 }
