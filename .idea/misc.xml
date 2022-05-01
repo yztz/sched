@@ -8,17 +8,21 @@
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/activity_landscape.xml" value="0.264" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/activity_portrait.xml" value="0.28072916666666664" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/frag_landscape_body.xml" value="0.28072916666666664" />
-        <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/frag_landscape_select.xml" value="0.40260416666666665" />
+        <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/frag_landscape_select.xml" value="0.16666666666666666" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/frag_portrait_body.xml" value="0.28072916666666664" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_course.xml" value="0.40260416666666665" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_day_of_week.xml" value="0.40260416666666665" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_item_course.xml" value="0.40260416666666665" />
+        <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_item_time.xml" value="0.303125" />
+        <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_item_timepicker.xml" value="0.303125" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_item_week.xml" value="0.40260416666666665" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_select.xml" value="0.264" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_select_week.xml" value="0.4" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_stepform.xml" value="0.40260416666666665" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_time.xml" value="0.28072916666666664" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_view_courseinfo.xml" value="0.40260416666666665" />
+        <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_view_numpicker.xml" value="0.303125" />
+        <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/layout_view_timesetting.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/underline.xml" value="0.28072916666666664" />
         <entry key="..\:/asproj/sched/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1455" />
         <entry key="..\:/asproj/sched/app/src/main/res/drawable/cloudy.xml" value="0.1595" />

@@ -1,5 +1,7 @@
 package top.yztz.sched.pojo;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +35,31 @@ public class Date {
 
     }
 
+    public Date(int weeks, int day, int startTime, int endTime) {
+        this.weeks = weeks;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public List<Integer> getWeeks() {
         return parseWeek(weeks);
+    }
+
+    public int getRawWeeks() {
+        return weeks;
+    }
+
+    public boolean isSingleWeek() {
+        return this.weeks == SINGLE_WEEK;
+    }
+
+    public boolean isDoubleWeek() {
+        return this.weeks == DOUBLE_WEEK;
+    }
+
+    public boolean isAllWeek() {
+        return this.weeks == ALL_WEEK;
     }
 
     public void setWeeks(int bitmap) {
@@ -114,4 +139,13 @@ public class Date {
 
         return ans;
     }
+
+    public void copyFrom(Date from) {
+        this.weeks = from.weeks;
+        this.day = from.day;
+        this.startTime = from.startTime;
+        this.endTime = from.endTime;
+    }
+
+
 }

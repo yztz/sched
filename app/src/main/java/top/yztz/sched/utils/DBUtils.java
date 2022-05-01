@@ -16,6 +16,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import top.yztz.sched.pojo.Course;
+import top.yztz.sched.pojo.Date;
+
 public class DBUtils {
     private static final String TAG = "DBUtils";
 
@@ -67,7 +70,7 @@ public class DBUtils {
         }
     }
 
-    public static ContentValues buildCourse(String name, String teacher, int day, String place, int start, int end, int week) {
+    public static ContentValues parseCourse(String name, String teacher, int day, String place, int start, int end, int week) {
         ContentValues ans = new ContentValues();
         ans.put("cname", name);
         ans.put("cteacher", teacher);
@@ -76,6 +79,19 @@ public class DBUtils {
         ans.put("cend", end);
         ans.put("cweek", week);
         ans.put("cday", day);
+        return ans;
+    }
+
+    public static ContentValues parseCourse(Course course) {
+        ContentValues ans = new ContentValues();
+        ans.put("cname", course.getName());
+        ans.put("cteacher", course.getTeacher());
+        ans.put("cplace", course.getPlace());
+        Date date = course.getDate();
+        ans.put("cstart", date.getStartTime());
+        ans.put("cend", date.getEndTime());
+        ans.put("cweek", date.getRawWeeks());
+        ans.put("cday", date.getDay());
         return ans;
     }
 

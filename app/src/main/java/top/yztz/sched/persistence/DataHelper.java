@@ -76,6 +76,11 @@ public class DataHelper {
         return ans;
     }
 
+    public static void updateCourse(Course course) {
+        int update = db.update(TABLE_COURSE, DBUtils.parseCourse(course), "cid = " + course.getId(), null);
+        Log.d(TAG, "updateCourse: affect " + update + " rows");
+    }
+
     static class Rule {
         private StringBuilder sb = new StringBuilder();
         private int ruleNum = 0;

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +54,7 @@ public class SelectFrag extends Fragment implements WeekAdapter.OnWeekClickListe
         initWeekList();
         initFormView();
         showWeekList();
-
+        scrollToCurrentWeek(DateUtils.weekNo);
     }
 
 
@@ -71,11 +73,10 @@ public class SelectFrag extends Fragment implements WeekAdapter.OnWeekClickListe
 
     public boolean showWeekList() {
         if (formView.isChanged()) {
-            // todo
+            new PopupWindow()
         }
         flPanelContainer.removeAllViews();
         flPanelContainer.addView(rvList, flp);
-        scrollToCurrentWeek();
 
         return true;
     }
@@ -93,13 +94,16 @@ public class SelectFrag extends Fragment implements WeekAdapter.OnWeekClickListe
 
 
 
-    private void scrollToCurrentWeek() {
+    private void scrollToCurrentWeek(int weekNo) {
         // 延后等待装载组件完成，使动画明显
-        rvList.postDelayed(()-> rvList.smoothScrollToPosition(DateUtils.weekNo - 1), 500);
+        rvList.postDelayed(()-> rvList.smoothScrollToPosition(weekNo - 1), 200);
     }
 
+
+    // 刷新课表
     @Override
     public void onClick(int weekNo) {
+        scrollToCurrentWeek(weekNo);
         WeekFrag weekFrag = (WeekFrag) getParentFragmentManager().findFragmentByTag("week_table");
         if (null != weekFrag)
             weekFrag.showWeek(weekNo);
