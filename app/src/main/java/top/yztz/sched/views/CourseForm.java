@@ -5,12 +5,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,13 +17,12 @@ import androidx.annotation.Nullable;
 import java.util.function.Consumer;
 
 import top.yztz.sched.R;
-import top.yztz.sched.fragments.WeekFrag;
 import top.yztz.sched.interfaces.ConfirmCallback;
 import top.yztz.sched.persistence.DataHelper;
 import top.yztz.sched.pojo.Course;
 import top.yztz.sched.utils.ToastUtil;
 
-public class CourseFormView extends LinearLayout implements TimeSettingDialog.onDismissListener, View.OnClickListener {
+public class CourseForm extends LinearLayout implements TimeSettingDialog.onDismissListener, View.OnClickListener {
     private static final String TAG = "CourseFormView";
     private EditText mName, mTeacher, mPlace;
     private Button mBtnTime, mBtnSave;
@@ -39,6 +37,8 @@ public class CourseFormView extends LinearLayout implements TimeSettingDialog.on
 
     private boolean changed = false;
 
+    private StateListener stateListener;
+
     private void setChanged(boolean changed) {
         System.out.println("change is set to " + changed);
         if (changed && this.changed) return;
@@ -52,7 +52,7 @@ public class CourseFormView extends LinearLayout implements TimeSettingDialog.on
         this.changed = changed;
     }
 
-    public CourseFormView(@NonNull Context context) {
+    public CourseForm(@NonNull Context context) {
         this(context, null);
     }
 
@@ -74,8 +74,9 @@ public class CourseFormView extends LinearLayout implements TimeSettingDialog.on
         setChanged(false);
     }
 
-    public CourseFormView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public CourseForm(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setGravity(Gravity.CENTER);
         inflate(context, R.layout.layout_view_courseinfo, this);
         mName = findViewById(R.id.name);
         mTeacher = findViewById(R.id.teacher);
@@ -108,6 +109,7 @@ public class CourseFormView extends LinearLayout implements TimeSettingDialog.on
         commit();
         setChanged(false);
         ToastUtil.show(getContext(), "保存成功");
+        if (null != stateListener) stateListener.onSave(course);
     }
 
     public void quit(ConfirmCallback callback) {
@@ -123,10 +125,6 @@ public class CourseFormView extends LinearLayout implements TimeSettingDialog.on
             callback.callback(true);
         }
     }
-
-//    public boolean isChanged() {
-//        return changed;
-//    }
 
     // 时间设置窗口关闭回调
     @Override
@@ -145,6 +143,10 @@ public class CourseFormView extends LinearLayout implements TimeSettingDialog.on
 //        else if (v == mBtnBack) {
 //
 //        }
+    }
+
+    public void setStateListener(StateListener listener) {
+        this.stateListener = listener;
     }
 
     class MyTextWatcher implements TextWatcher {
@@ -177,6 +179,12 @@ public class CourseFormView extends LinearLayout implements TimeSettingDialog.on
                 setChanged(true);
             }
         }
+    }
+
+    public interface StateListener {
+        void onSave(Course course);
+        // 功能上可能有点重叠，所以没有用到
+        void onBack(Course course);
     }
 
 }

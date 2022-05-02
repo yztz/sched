@@ -81,7 +81,7 @@ public class TimeSettingDialog extends Dialog implements View.OnClickListener {
             mCustom.setText(sb.toString());
             mBtnCustom.setChecked(true);
         }
-        mDayOfWeekGroup.check(date.getDay() - 1);
+        mDayOfWeekGroup.check(date.getDay());
         startPicker.setTime(date.getStartTime());
         endPicker.setTime(date.getEndTime());
     }
@@ -118,6 +118,7 @@ public class TimeSettingDialog extends Dialog implements View.OnClickListener {
 
         // 监听周次选择
         mBtnGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            System.out.println("CheckedId is " + checkedId);
             switch (checkedId) {
                 case R.id.btn_single:
                     date.setWeeks(Date.SINGLE_WEEK);
@@ -138,7 +139,8 @@ public class TimeSettingDialog extends Dialog implements View.OnClickListener {
         });
         // 监听dayOfWeek
         mDayOfWeekGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            date.setDay(checkedId + 1);
+            System.out.println("checkedId is " + checkedId);
+            date.setDay(checkedId);
         });
 
         // 监听节次变化

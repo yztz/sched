@@ -55,6 +55,7 @@ public class ActionbarView extends LinearLayout implements View.OnClickListener 
         mToday.setOnClickListener(this);
         mTomorrow.setOnClickListener(this);
 
+        toggleWeather(true);
     }
 
     private void toggleWeather(boolean today) {

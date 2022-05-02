@@ -17,12 +17,20 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.MyViewHolder> 
     private Context context;
     private OnWeekClickListener listener;
 
+    private int currentWeek;
 
-    private int currentWeek = DateUtils.weekNo;
-
-    public WeekAdapter(Context context, OnWeekClickListener listener) {
+    public WeekAdapter(Context context, int week) {
         this.context = context;
+        this.currentWeek = week;
+    }
+
+    public void setOnWeekClickListener(OnWeekClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setCurrentWeek(int weekNo) {
+        this.currentWeek = weekNo;
+        notifyDataSetChanged();
     }
 
 
@@ -44,8 +52,6 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.MyViewHolder> 
 
         int finalPosition = position;
         holder.root.setOnClickListener(v -> {
-            currentWeek = finalPosition;
-            notifyDataSetChanged();
             if (null != listener) listener.onClick(finalPosition);
         });
     }
