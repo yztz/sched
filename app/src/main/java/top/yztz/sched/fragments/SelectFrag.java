@@ -2,6 +2,7 @@ package top.yztz.sched.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import top.yztz.sched.views.CourseForm;
 import top.yztz.sched.views.WeekList;
 
 public class SelectFrag extends Fragment implements CourseForm.StateListener, WeekList.StateListener {
+    private static final String TAG = "SelectFrag";
+    
     private FrameLayout flPanelContainer;
     private CourseForm courseForm;
     private WeekList weekList;
@@ -95,6 +98,13 @@ public class SelectFrag extends Fragment implements CourseForm.StateListener, We
         WeekFrag weekFrag = (WeekFrag) getParentFragmentManager().findFragmentByTag("week_table");
         if (null != weekFrag)
             weekFrag.showWeek(weekNo);
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        courseForm.saveCurrentChanges();
     }
 
 

@@ -3,6 +3,8 @@ package top.yztz.sched.pojo;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -13,6 +15,8 @@ import top.yztz.sched.utils.StringUtils;
 
 
 public class Course {
+    public static final int NEW_COURSE = -1;
+
     @FieldName("cid")
     private int id;
     @FieldName("cname")
@@ -28,8 +32,8 @@ public class Course {
     public Course() {
     }
 
-    public Course(int id, String name, String place, Date date, String teacher) {
-        this.id = id;
+    public Course(String name, String place, Date date, String teacher) {
+        this.id = NEW_COURSE;
         this.name = name;
         this.place = place;
         this.date = date;
@@ -76,6 +80,14 @@ public class Course {
         this.date = date;
     }
 
+    public void copyFrom(Course from) {
+        this.name = from.name;
+        this.teacher = from.teacher;
+        if (null == this.date)  this.date = new Date();
+        this.date.copyFrom(from.getDate());
+        this.id = from.id;
+        this.place = from.place;
+    }
 
     @Override
     public String toString() {

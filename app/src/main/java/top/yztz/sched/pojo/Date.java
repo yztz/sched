@@ -42,13 +42,17 @@ public class Date {
         this.endTime = endTime;
     }
 
-    public List<Integer> getWeeks() {
-        return parseWeek(weeks);
-    }
-
-    public int getRawWeeks() {
+    public int getWeeks() {
         return weeks;
     }
+
+    //    public List<Integer> getWeeks() {
+//        return parseWeek(weeks);
+//    }
+
+//    public int getRawWeeks() {
+//        return weeks;
+//    }
 
     public boolean isSingleWeek() {
         return this.weeks == SINGLE_WEEK;
@@ -108,6 +112,10 @@ public class Date {
                 '}';
     }
 
+    public static List<Integer> getWeeks(Date date) {
+        return parseWeek(date.weeks);
+    }
+
     public static List<Integer> parseWeek(int i) {
         List<Integer> ans = new ArrayList<>();
 
@@ -146,6 +154,5 @@ public class Date {
         this.startTime = from.startTime;
         this.endTime = from.endTime;
     }
-
 
 }

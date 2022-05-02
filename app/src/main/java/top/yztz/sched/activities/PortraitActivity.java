@@ -13,6 +13,8 @@ import android.view.MotionEvent;
 
 
 import top.yztz.sched.R;
+import top.yztz.sched.config.Config;
+import top.yztz.sched.config.ConfigHelper;
 import top.yztz.sched.fragments.DayFrag;
 import top.yztz.sched.persistence.DataHelper;
 import top.yztz.sched.views.ActionbarView;
@@ -30,7 +32,7 @@ public class PortraitActivity extends AppCompatActivity implements GestureDetect
         setContentView(R.layout.activity_portrait);
         // 初始化数据
         DataHelper.DBInit(this);
-
+        ConfigHelper.configInit(this);
         // 载入fragment
         initFragment();
 

@@ -1,33 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@drawable/corner_radius"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="110dp">
 
     <TextView
         android:textSize="16sp"
-        android:text="要放弃所做的更改吗"
+        android:textColor="#D01C1C1C"
+        android:text="要放弃所做的更改吗?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
+        android:layout_marginTop="3dp"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btn_cancel"
+            android:textSize="13sp"
             android:text="取消"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:backgroundTint="#9C9A9A"
+            android:layout_width="70dp"
+            android:layout_height="40dp"/>
 
         <Button
+            android:layout_marginLeft="13dp"
             android:id="@+id/btn_confirm"
+            android:textSize="13sp"
             android:text="是的"
+            android:layout_width="70dp"
+            android:layout_height="40dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="13sp"
+            android:text="*"
+            android:textColor="#F42A2A"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textSize="11sp"
+            android:text="放弃的更改将被保存至暂存区"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
 
 
 </LinearLayout>

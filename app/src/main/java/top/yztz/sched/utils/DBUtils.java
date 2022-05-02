@@ -90,7 +90,7 @@ public class DBUtils {
         Date date = course.getDate();
         ans.put("cstart", date.getStartTime());
         ans.put("cend", date.getEndTime());
-        ans.put("cweek", date.getRawWeeks());
+        ans.put("cweek", date.getWeeks());
         ans.put("cday", date.getDay());
         return ans;
     }

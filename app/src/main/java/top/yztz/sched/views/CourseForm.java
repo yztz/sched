@@ -1,6 +1,7 @@
 package top.yztz.sched.views;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -14,9 +15,13 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.function.Consumer;
 
 import top.yztz.sched.R;
+import top.yztz.sched.config.Config;
+import top.yztz.sched.config.ConfigHelper;
 import top.yztz.sched.interfaces.ConfirmCallback;
 import top.yztz.sched.persistence.DataHelper;
 import top.yztz.sched.pojo.Course;
@@ -26,6 +31,8 @@ public class CourseForm extends LinearLayout implements TimeSettingDialog.onDism
     private static final String TAG = "CourseFormView";
     private EditText mName, mTeacher, mPlace;
     private Button mBtnTime, mBtnSave;
+
+    private Course backup = new Course();
     private Course course;
 
     private MyTextWatcher nameWatcher, teacherWatcher, placeWatcher;
@@ -40,7 +47,7 @@ public class CourseForm extends LinearLayout implements TimeSettingDialog.onDism
     private StateListener stateListener;
 
     private void setChanged(boolean changed) {
-        System.out.println("change is set to " + changed);
+//        System.out.println("change is set to " + changed);
         if (changed && this.changed) return;
         if (changed) {
             mBtnSave.setBackgroundColor(getContext().getColor(R.color.blue));
@@ -57,7 +64,38 @@ public class CourseForm extends LinearLayout implements TimeSettingDialog.onDism
     }
 
     public void setCourse(Course course) {
+        this.backup.copyFrom(course);
+
         this.course = course;
+        show();
+        setChanged(false);
+
+        Course tmpCourse = ConfigHelper.getTemporaryCourse(course);
+        if (null != tmpCourse) { // 存在备份
+            // 移除原有备份
+            ConfigHelper.removeTemporaryCourse(course);
+            this.post(()->{
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.snackbar_container), "存在可用备份", Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction("恢复", v -> {
+                    this.course = tmpCourse;
+                    // 显示最新备份
+                    show();
+                    // 已更改
+                    setChanged(true);
+                });
+                snackbar.show();
+            });
+
+        }
+    }
+
+    public void saveCurrentChanges() {
+        if (null != course && changed) {
+            ConfigHelper.putTemporaryCourse(course);
+        }
+    }
+
+    private void show() {
         // 这样的设计可以避免TextWatcher重复实例化
         nameWatcher.unbind();
         teacherWatcher.unbind();
@@ -70,8 +108,6 @@ public class CourseForm extends LinearLayout implements TimeSettingDialog.onDism
         nameWatcher.bind(course::setName);
         teacherWatcher.bind(course::setTeacher);
         placeWatcher.bind(course::setPlace);
-
-        setChanged(false);
     }
 
     public CourseForm(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -102,6 +138,7 @@ public class CourseForm extends LinearLayout implements TimeSettingDialog.onDism
             return;
         }
         DataHelper.updateCourse(course);
+        ConfigHelper.removeTemporaryCourse(course);
     }
 
     public void save() {
@@ -114,9 +151,14 @@ public class CourseForm extends LinearLayout implements TimeSettingDialog.onDism
 
     public void quit(ConfirmCallback callback) {
         if (changed) {
+            // 询问是否确认保存
             confirmDialog.show(confirmed -> {
                 if (confirmed) {
+                    // 恢复更改前
+                    this.course.copyFrom(backup);
                     setChanged(false);
+                    // 删除可能存在的备份
+                    ConfigHelper.removeTemporaryCourse(course);
                     this.course = null;
                 }
                 callback.callback(confirmed);
@@ -135,7 +177,10 @@ public class CourseForm extends LinearLayout implements TimeSettingDialog.onDism
     @Override
     public void onClick(View v) {
         if (v == mBtnTime) {
-            timeDialog.show((course != null) ? course.getDate() : null);
+            if (null != course)
+                timeDialog.show(course.getDate());
+            else
+                timeDialog.show();
         }
         else if (v == mBtnSave) {
             save();

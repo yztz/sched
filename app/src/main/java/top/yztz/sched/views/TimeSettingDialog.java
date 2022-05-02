@@ -73,7 +73,7 @@ public class TimeSettingDialog extends Dialog implements View.OnClickListener {
         } else if (date.isAllWeek()) {
             mBtnAll.setChecked(true);
         } else {
-            List<Integer> weeks = date.getWeeks();
+            List<Integer> weeks = Date.getWeeks(date);
             if (weeks.size() == 0) return;
             StringBuilder sb = new StringBuilder();
             for (int week : weeks) sb.append(week).append(",");
