@@ -33,19 +33,22 @@ public class SqlHelper extends SQLiteOpenHelper {
                 ")";
         db.execSQL(sql);
         // This is only test data
-        ContentValues values = new ContentValues();
         db.insert(TABLE_COURSE, null,
-                DBUtils.parseCourse("安卓", "赵丽娜",Date.TUESDAY, "三教", 10, 12, Date.ALL_WEEK));
+                DBUtils.parseCourse("安卓", "赵丽娜",Date.TUESDAY, "三教317", 10, 12, Date.ALL_WEEK));
         db.insert(TABLE_COURSE, null,
-                DBUtils.parseCourse("创新实践", "龚晓君",Date.WEDNESDAY, "三教", 3, 4, Date.ALL_WEEK));
+                DBUtils.parseCourse("创新实践", "龚晓君",Date.WEDNESDAY, "三教317", 3, 4, Date.ALL_WEEK));
         db.insert(TABLE_COURSE, null,
-                DBUtils.parseCourse("形式与政策", "史维",Date.WEDNESDAY, "六教", 6, 7, Date.SINGLE_WEEK));
+                DBUtils.parseCourse("形式与政策", "史维",Date.WEDNESDAY, "六教108", 6, 7, new int[]{6, 8, 10, 12}));
         db.insert(TABLE_COURSE, null,
-                DBUtils.parseCourse("国际关系", "方建中",Date.TUESDAY, "七教", 6, 7, Date.ALL_WEEK));
+                DBUtils.parseCourse("大职", "刘媛",Date.WEDNESDAY, "十二教210", 6, 7, new int[]{3, 5, 7, 9}));
         db.insert(TABLE_COURSE, null,
-                DBUtils.parseCourse("不知名课程1", "不知名老师1", Date.FRIDAY, "十二教", 1, 2, Date.week2bitmap(new int[]{1, 2, 3})));
+                DBUtils.parseCourse("心理", "王亚楠",Date.THURSDAY, "三教315", 3, 4, Date.SINGLE_WEEK));
         db.insert(TABLE_COURSE, null,
-                DBUtils.parseCourse("不知名课程2", "不知名老师2", Date.MONDAY, "三教", 3, 5, Date.ALL_WEEK));
+                DBUtils.parseCourse("国际关系", "方建中",Date.TUESDAY, "七教306", 6, 7, Date.ALL_WEEK));
+        db.insert(TABLE_COURSE, null,
+                DBUtils.parseCourse("项目管理", "闫帅", Date.FRIDAY, "七教308", 1, 2, Date.ALL_WEEK));
+        db.insert(TABLE_COURSE, null,
+                DBUtils.parseCourse("网络编程", "吴永胜", Date.FRIDAY, "六教301", 3, 5, Date.ALL_WEEK));
     }
 
     @Override

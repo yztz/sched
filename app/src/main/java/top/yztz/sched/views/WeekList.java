@@ -72,8 +72,7 @@ public class WeekList extends LinearLayout implements WeekAdapter.OnWeekClickLis
     // 监听weekList事件，点击刷新课表
     @Override
     public void onClick(int weekNo) {
-        adapter.setCurrentWeek(weekNo);
-        scrollToCurrentWeek(weekNo);
+        setCurrentWeek(weekNo);
         if (null != listener) listener.onChange(weekNo);
     }
 

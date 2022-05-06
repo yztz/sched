@@ -60,7 +60,7 @@ public class ActionbarView extends LinearLayout implements View.OnClickListener 
 
     private void toggleWeather(boolean today) {
         WeatherUtils.updateWeather(weather -> {
-            int resId = WeatherUtils.getWeatherResID(weather.getForecast().get(today ? 1 : 0).getType());
+            int resId = WeatherUtils.getWeatherResID(weather.getForecast().get(today ? 0 : 1).getType());
             Drawable target = context.getDrawable(resId);
             ObjectAnimator animator = ObjectAnimator.ofFloat(mWeather, "alpha", 1, 0).setDuration(150);
             animator.addListener(new AnimatorListenerAdapter() {

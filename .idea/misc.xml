@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/drawable/corner_radius.xml" value="0.237" />
+        <entry key="..\:/AndroidFolder/sched/app/src/main/res/drawable/sunny.xml" value="0.177" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/drawable/week_selected.xml" value="0.237" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/activity_landscape.xml" value="0.264" />
         <entry key="..\:/AndroidFolder/sched/app/src/main/res/layout/activity_portrait.xml" value="0.28072916666666664" />
@@ -44,10 +45,8 @@
         <entry key="..\:/asproj/sched/app/src/main/res/layout/activity_landscape.xml" value="0.21666666666666667" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/activity_portrait.xml" value="0.25" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/frag_landscape_body.xml" value="0.21666666666666667" />
-        <entry key="..\:/asproj/sched/app/src/main/res/layout/frag_portrait_body.xml" value="0.39947916666666666" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_course.xml" value="0.25" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_day.xml" value="0.21666666666666667" />
-        <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_item_timepicker.xml" value="0.39947916666666666" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_main_action_bar.xml" value="0.25" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_select.xml" value="0.21666666666666667" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_table.xml" value="0.25" />
@@ -55,10 +54,6 @@
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_title_scene1.xml" value="0.20277777777777778" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_title_scene2.xml" value="0.20277777777777778" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_title_switcher.xml" value="0.21666666666666667" />
-        <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_view_asktmp.xml" value="0.39947916666666666" />
-        <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_view_confirmdialog.xml" value="0.72" />
-        <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_view_courseinfo.xml" value="0.4" />
-        <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_view_timesetting.xml" value="0.39947916666666666" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/layout_week.xml" value="0.21666666666666667" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/menu_portrait.xml" value="0.21666666666666667" />
         <entry key="..\:/asproj/sched/app/src/main/res/layout/underline.xml" value="0.21666666666666667" />

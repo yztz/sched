@@ -25,8 +25,8 @@ public class DateUtils {
 
     static {
         start = LocalDate.parse(Config.startWeek);
-//        today = LocalDate.now();
-        today = LocalDate.parse("2022-04-26");
+        today = LocalDate.now();
+//        today = LocalDate.parse("2022-04-26"); test
         tomorrow = today.plus(1, ChronoUnit.DAYS);
 
         weekNo = (int) start.until(today, ChronoUnit.WEEKS);

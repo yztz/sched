@@ -70,6 +70,10 @@ public class DBUtils {
         }
     }
 
+    public static ContentValues parseCourse(String name, String teacher, int day, String place, int start, int end, int[] week) {
+        return parseCourse(name, teacher, day, place, start, end, Date.week2bitmap(week));
+    }
+
     public static ContentValues parseCourse(String name, String teacher, int day, String place, int start, int end, int week) {
         ContentValues ans = new ContentValues();
         ans.put("cname", name);

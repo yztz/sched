@@ -13,7 +13,7 @@ import top.yztz.sched.R;
 import top.yztz.sched.config.Config;
 import top.yztz.sched.utils.DateUtils;
 
-public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.MyViewHolder> {
+public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.MyViewHolder> implements View.OnClickListener {
     private Context context;
     private OnWeekClickListener listener;
 
@@ -50,10 +50,7 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.MyViewHolder> 
             holder.root.setBackground(null);
         }
 
-        int finalPosition = position;
-        holder.root.setOnClickListener(v -> {
-            if (null != listener) listener.onClick(finalPosition);
-        });
+        holder.root.setOnClickListener(this);
     }
 
 
@@ -61,6 +58,14 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.MyViewHolder> 
     public int getItemCount() {
         return Config.WEEK_NUM; // current 20
     }
+
+    @Override
+    public void onClick(View v) {
+        RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) v.getLayoutParams();
+        int pos = lp.getViewLayoutPosition();
+        if (null != listener) listener.onClick(pos + 1);
+    }
+
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         View root;
@@ -74,6 +79,6 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.MyViewHolder> 
     }
 
     public interface OnWeekClickListener {
-        void onClick(int week);
+        void onClick(int weekNo);
     }
 }

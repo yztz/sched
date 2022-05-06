@@ -77,9 +77,9 @@ public class WeekFrag extends Fragment implements View.OnClickListener {
 
     public void showWeek(int weekNo) {
         // 取消原先如果有选中的课程
-        // 这里不需要对select_frag中的状态做检查，因为调用这个方法时一定没有显示的表单
-        highlightCourse = null;
+        switchHighlight(null);
         List<Course> courses = DataHelper.getCoursesByWeek(weekNo);
+        for (Course course : courses) System.out.println(course.getName());
         TableRenderHelper.renderTable(flContainer, courses, unitHeight, unitWidth, cv -> {
             cv.setTextSizeRatio(0.5f);
             cv.setRadius(10);

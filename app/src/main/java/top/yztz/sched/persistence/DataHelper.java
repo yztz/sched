@@ -73,7 +73,8 @@ public class DataHelper {
         while (cursor.moveToNext()) {
             ans.add(DBUtils.parseCursor(cursor, Course.class));
         }
-        Log.d(TAG, "getCoursesByWeekBitmap: " + ans.size());
+        Log.d(TAG, "getCoursesByWeekBitmap: bitmap is " + Integer.toBinaryString(bitmap));
+        Log.d(TAG, "getCoursesByWeekBitmap: size is " + ans.size());
         return ans;
     }
 
