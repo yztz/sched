@@ -68,8 +68,13 @@ public class SelectFrag extends Fragment implements CourseForm.StateListener, We
         courseForm.setStateListener(this);
     }
 
+    public void quit(ConfirmCallback callback) {
+        courseForm.quit(confirmed -> {
+            if(null != callback) callback.callback(confirmed);
+        });
+    }
 
-
+    /* 显示周次选择器 */
     public void showWeekList(ConfirmCallback callback) {
         courseForm.quit(confirmed -> {
             if (confirmed) {
@@ -79,7 +84,7 @@ public class SelectFrag extends Fragment implements CourseForm.StateListener, We
             if (null != callback) callback.callback(confirmed);
         });
     }
-
+    /* 显示表单 */
     public void showFormView(Course course, ConfirmCallback callback) {
         courseForm.quit(confirmed -> {
             if (confirmed) {

@@ -38,18 +38,6 @@ public class LandscapeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState: ...");
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        Log.d(TAG, "onSaveInstanceState: ...");
-    }
-
     private void initFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.left, weekFrag, "week_table");
@@ -57,4 +45,11 @@ public class LandscapeActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        selectFrag.quit(confirmed -> {
+            if (confirmed) super.onBackPressed();
+        });
+//        super.onBackPressed();
+    }
 }
